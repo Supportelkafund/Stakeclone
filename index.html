@@ -70,8 +70,31 @@
  <div class=time-current>
  <div class=head-time>
  <img src="data:image/png;base64,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" alt>
- <p>Event ended:</p>
+ <p>Event Live🟢:</p>
  </div>
+<script>
+// Function to extract the time
+function getTimeFromHTML() {
+    // Get hour, minute, and second elements
+    const hourItems = document.querySelectorAll('#h-time .item');
+    const minuteItems = document.querySelectorAll('#m-time .item');
+    const secondItems = document.querySelectorAll('#s-time .item');
+
+    // Parse the time values
+    const hours = Array.from(hourItems).map(item => item.textContent).join('');
+    const minutes = Array.from(minuteItems).map(item => item.textContent).join('');
+    const seconds = Array.from(secondItems).map(item => item.textContent).join('');
+
+    // Return the formatted time as a string
+    return `${hours}:${minutes}:${seconds}`;
+}
+
+// Example usage
+const currentTime = getTimeFromHTML();
+console.log('Current Time:', currentTime);
+
+
+</script>
  <div class=time>
  <div class=gl id=h-time>
  <div class=item>0</div>

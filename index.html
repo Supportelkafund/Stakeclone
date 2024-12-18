@@ -69,65 +69,60 @@
  <p>Event Live🟢:</p>
  </div>
 <script>
-// Function to start the countdown
-function startCountdown() {
-    // Get hour, minute, and second elements
-    const hourItems = document.querySelectorAll('#h-time .item');
-    const minuteItems = document.querySelectorAll('#m-time .item');
-    const secondItems = document.querySelectorAll('#s-time .item');
+document.addEventListener("DOMContentLoaded", function () {
+    function startCountdown() {
+        const hourItems = document.querySelectorAll('#h-time .item');
+        const minuteItems = document.querySelectorAll('#m-time .item');
+        const secondItems = document.querySelectorAll('#s-time .item');
 
-    // Helper function to set values in the DOM
-    function setTime(hours, minutes, seconds) {
-        const hoursStr = String(hours).padStart(2, '0');
-        const minutesStr = String(minutes).padStart(2, '0');
-        const secondsStr = String(seconds).padStart(2, '0');
-
-        // Update hours
-        hourItems[0].textContent = hoursStr[0];
-        hourItems[1].textContent = hoursStr[1];
-
-        // Update minutes
-        minuteItems[0].textContent = minutesStr[0];
-        minuteItems[1].textContent = minutesStr[1];
-
-        // Update seconds
-        secondItems[0].textContent = secondsStr[0];
-        secondItems[1].textContent = secondsStr[1];
-    }
-
-    // Extract initial values
-    let hours = parseInt(hourItems[0].textContent + hourItems[1].textContent, 10);
-    let minutes = parseInt(minuteItems[0].textContent + minuteItems[1].textContent, 10);
-    let seconds = parseInt(secondItems[0].textContent + secondItems[1].textContent, 10);
-
-    // Countdown logic
-    const timer = setInterval(() => {
-        if (hours === 0 && minutes === 0 && seconds === 0) {
-            clearInterval(timer); // Stop countdown when time reaches 00:00:00
-            console.log("Countdown complete!");
+        // Check if any NodeList is empty
+        if (hourItems.length < 2 || minuteItems.length < 2 || secondItems.length < 2) {
+            console.error("Time elements not found or incomplete!");
             return;
         }
 
-        // Decrement seconds
-        seconds--;
+        // Helper function to set time in the DOM
+        function setTime(hours, minutes, seconds) {
+            const hoursStr = String(hours).padStart(2, '0');
+            const minutesStr = String(minutes).padStart(2, '0');
+            const secondsStr = String(seconds).padStart(2, '0');
 
-        // Handle rollover of minutes and hours
-        if (seconds < 0) {
-            seconds = 59;
-            minutes--;
+            hourItems[0].textContent = hoursStr[0];
+            hourItems[1].textContent = hoursStr[1];
+            minuteItems[0].textContent = minutesStr[0];
+            minuteItems[1].textContent = minutesStr[1];
+            secondItems[0].textContent = secondsStr[0];
+            secondItems[1].textContent = secondsStr[1];
         }
-        if (minutes < 0) {
-            minutes = 59;
-            hours--;
-        }
 
-        // Update the DOM
-        setTime(hours, minutes, seconds);
-    }, 1000); // Run every second
-}
+        let hours = parseInt(hourItems[0].textContent + hourItems[1].textContent, 10);
+        let minutes = parseInt(minuteItems[0].textContent + minuteItems[1].textContent, 10);
+        let seconds = parseInt(secondItems[0].textContent + secondItems[1].textContent, 10);
 
-// Start the countdown
-startCountdown();
+        const timer = setInterval(() => {
+            if (hours === 0 && minutes === 0 && seconds === 0) {
+                clearInterval(timer);
+                console.log("Countdown complete!");
+                return;
+            }
+
+            seconds--;
+            if (seconds < 0) {
+                seconds = 59;
+                minutes--;
+            }
+            if (minutes < 0) {
+                minutes = 59;
+                hours--;
+            }
+
+            setTime(hours, minutes, seconds);
+        }, 1000);
+    }
+
+    startCountdown();
+});
+
 
 </script>
  <div class=time>
